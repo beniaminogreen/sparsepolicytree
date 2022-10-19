@@ -1,0 +1,19 @@
+[package]
+name = 'exhaustivetree'
+version = '0.1.0'
+edition = '2021'
+
+[lib]
+crate-type = [ 'staticlib' ]
+name = 'exhaustivetree'
+
+[profile.release]
+debug = true
+
+[dependencies]
+binary_search_tree = "0.2.2"
+extendr-api = {version ="0.3.1", features =["ndarray"]}
+iter_utils = "0.1.0"
+itertools = "0.10.5"
+ordered-float = "3.2.0"
+rayon = "1.5.3"
