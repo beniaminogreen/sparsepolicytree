@@ -1,7 +1,7 @@
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 
 # This is provided in Makevars.ucrt for R >= 4.2
-TOOLCHAIN ?= stable-msvc
+TOOLCHAIN ?= nightly-msvc
 
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
