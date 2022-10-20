@@ -1,0 +1,48 @@
+---
+output: github_document
+always_allow_html: true
+---
+
+# Parallel Policy Tree
+
+An R / Rust Package to implement a parallelized exhaustive tree search for
+policy-learning. Aims to extend and speed up work done with the `policytree`
+package.
+
+# Usage
+
+There's just one function, `exhaustive_tree()`. Use it just as you would the
+`policy_tree()` function from the `policytree` package, and enjoy the parallelized speed!
+
+Trees aren't guaranteed to be exactly the same as those produced by
+`policytree` in that some leaves may be left unpruned (working on this), but
+they should give the same predictions.
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+library(exhaustivetree)
+```
+
+```{r}
+
+n <- 400
+p <- 4
+d <- 3
+
+# Classification task taken from policytree tests
+X <- round(matrix(rnorm(n * p), n, p),2)
+Y <- matrix(0, n, d)
+
+tree <- exhaustive_tree(X,Y,2)
+
+plot(tree)
+
+```
+
+
+
