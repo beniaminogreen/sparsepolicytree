@@ -45,4 +45,8 @@ tree
 ```
 
 
+# Installation
+
+You must have [Rust](https://www.rust-lang.org/tools/install) installed to
+compile this package.
 

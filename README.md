@@ -32,11 +32,16 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable:   split_value: -2.78 
-#>   (2) split_variable:   split_value: 0.8 
+#> (1) split_variable:   split_value: -2.6 
+#>   (2) split_variable:   split_value: 1.44 
 #>     (4) * action: 1 
 #>     (5) * action: 1 
-#>   (3) split_variable:   split_value: -3.29 
+#>   (3) split_variable:   split_value: -3.36 
 #>     (6) * action: 1 
 #>     (7) * action: 1
 ```
+
+# Installation
+
+You must have [Rust](https://www.rust-lang.org/tools/install) installed
+to compile this package.
