@@ -20,10 +20,16 @@ but they should give the same predictions.
 n <- 400
 p <- 4
 d <- 3
-
+depth <- 2
 # Classification task taken from policytree tests
+# Continuous X
 X <- round(matrix(rnorm(n * p), n, p),2)
+colnames(X) <- letters[1:ncol(X)]
 Y <- matrix(0, n, d)
+best.tree <- policytree:::make_tree(X, depth = depth, d = d)
+best.action <- policytree:::predict_test_tree(best.tree, X)
+Y[cbind(1:n, best.action)] <- 100 * runif(n)
+best.reward <- sum(Y[cbind(1:n, best.action)])
 
 tree <- exhaustive_tree(X,Y,2)
 
@@ -32,13 +38,13 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable:   split_value: -2.6 
-#>   (2) split_variable:   split_value: 1.44 
+#> (1) split_variable: b  split_value: -0.07 
+#>   (2) split_variable: a  split_value: 0.78 
 #>     (4) * action: 1 
-#>     (5) * action: 1 
-#>   (3) split_variable:   split_value: -3.36 
-#>     (6) * action: 1 
-#>     (7) * action: 1
+#>     (5) * action: 2 
+#>   (3) split_variable: a  split_value: 0.79 
+#>     (6) * action: 3 
+#>     (7) * action: 2
 ```
 
 # Installation

@@ -26,6 +26,7 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 library(exhaustivetree)
+library(policytree)
 ```
 
 ```{r}
@@ -33,10 +34,16 @@ library(exhaustivetree)
 n <- 400
 p <- 4
 d <- 3
-
+depth <- 2
 # Classification task taken from policytree tests
+# Continuous X
 X <- round(matrix(rnorm(n * p), n, p),2)
+colnames(X) <- letters[1:ncol(X)]
 Y <- matrix(0, n, d)
+best.tree <- policytree:::make_tree(X, depth = depth, d = d)
+best.action <- policytree:::predict_test_tree(best.tree, X)
+Y[cbind(1:n, best.action)] <- 100 * runif(n)
+best.reward <- sum(Y[cbind(1:n, best.action)])
 
 tree <- exhaustive_tree(X,Y,2)
 
