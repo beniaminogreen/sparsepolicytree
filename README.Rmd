@@ -40,7 +40,7 @@ Y <- matrix(0, n, d)
 
 tree <- exhaustive_tree(X,Y,2)
 
-plot(tree)
+tree
 
 ```
 
