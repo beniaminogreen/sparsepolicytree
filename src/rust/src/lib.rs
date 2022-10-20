@@ -250,15 +250,27 @@ impl<'a> SortedSets<'a> {
                     }
                 }
             }
-            return Node {
-                node_type: NodeType::Branch,
-                reward: best_reward,
-                action: None,
-                left_child: Some(Box::new(best_l_tree)),
-                right_child: Some(Box::new(best_r_tree)),
-                cut_axis: Some(best_split_axis),
-                cut_point: Some(best_split_point),
-            };
+            if best_l_tree.action.unwrap() != best_r_tree.action.unwrap() {
+                return Node {
+                    node_type: NodeType::Branch,
+                    reward: best_reward,
+                    action: None,
+                    left_child: Some(Box::new(best_l_tree)),
+                    right_child: Some(Box::new(best_r_tree)),
+                    cut_axis: Some(best_split_axis),
+                    cut_point: Some(best_split_point),
+                }
+            } else{
+                return Node {
+                    node_type: NodeType::Leaf,
+                    reward: best_reward,
+                    action: best_l_tree.action,
+                    left_child: None,
+                    right_child: None,
+                    cut_axis: None,
+                    cut_point: None,
+                }
+            }
         }
     }
 }
