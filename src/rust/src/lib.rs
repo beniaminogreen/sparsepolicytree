@@ -88,11 +88,11 @@ impl<'a> TreeSearcher<'a>{
         let nd: usize = self.scores.dim().1;
         let np: usize = self.sets.len();
 
-        let mut best_r_leaf = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
-        let mut best_l_leaf = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
+        let mut best_r_leaf = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
+        let mut best_l_leaf = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
 
         let mut best_axis: usize = 0;
-        let mut best_cut_point: OrderedFloat<f64> = OrderedFloat(-999999999999.9);
+        let mut best_cut_point: OrderedFloat<f64> = OrderedFloat(0.0);
 
         for p in 0..np {
             let mut current_l_rewards = Array1::from_elem(nd, OrderedFloat(0.0));
@@ -130,11 +130,11 @@ impl<'a> TreeSearcher<'a>{
 
     fn single_dimension_recursive_search(&self, dim: usize, depth: usize) -> Node {
 
-        let mut best_r_tree = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
-        let mut best_l_tree = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
+        let mut best_r_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
+        let mut best_l_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
 
         let mut best_split_point: OrderedFloat<f64> = OrderedFloat(0.0);
-        let mut best_reward: OrderedFloat<f64> = OrderedFloat(-99999999999.99);
+        let mut best_reward: OrderedFloat<f64> = OrderedFloat(-f64::INFINITY);
 
 
         let mut sets_r = self.clone();
@@ -178,11 +178,11 @@ impl<'a> TreeSearcher<'a>{
         } else {
             let np: usize = self.sets.len();
 
-            let mut best_r_tree = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
-            let mut best_l_tree = Node::new_leaf(OrderedFloat(-999999999999.9), 0);
+            let mut best_r_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
+            let mut best_l_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
             let mut best_split_axis: usize = 0;
             let mut best_split_point: OrderedFloat<f64> = OrderedFloat(0.0);
-            let mut best_reward: OrderedFloat<f64> = OrderedFloat(-99999999999.99);
+            let mut best_reward: OrderedFloat<f64> = OrderedFloat(-f64::INFINITY);
 
             for p in 0..np {
                 let mut sets_r = self.clone();
