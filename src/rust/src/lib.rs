@@ -1,8 +1,8 @@
 use extendr_api::prelude::*;
 use iter_utils::argmax;
-use ordered_float::OrderedFloat;
 use rayon::prelude::*;
 use std::collections::BTreeMap;
+use ordered_float::OrderedFloat;
 
 pub mod node;
 use crate::node::Node;
@@ -244,7 +244,7 @@ fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
-    mod exhaustivetree;
+    mod parallelpolicytree;
     fn rust_exhaustive_tree;
 }
 

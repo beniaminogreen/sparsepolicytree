@@ -1,12 +1,12 @@
 TARGET = $(subst 64,x86_64,$(subst 32,i686,$(WIN)))-pc-windows-gnu
 
 # This is provided in Makevars.ucrt for R >= 4.2
-TOOLCHAIN ?= nightly-msvc
+TOOLCHAIN ?= stable-msvc
 
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/$(TARGET)/release
-STATLIB = $(LIBDIR)/libexhaustivetree.a
-PKG_LIBS = -L$(LIBDIR) -lexhaustivetree -lws2_32 -ladvapi32 -luserenv -lbcrypt
+STATLIB = $(LIBDIR)/libparallelpolicytree.a
+PKG_LIBS = -L$(LIBDIR) -lparallelpolicytree -lws2_32 -ladvapi32 -luserenv -lbcrypt
 
 all: C_clean
 

@@ -1,6 +1,6 @@
 #' Return string `"Hello world!"` to R.
 #' @export
-exhaustive_tree <- function(X, Y, depth){
+parallel_policy_tree <- function(X, Y, depth){
     node_list <- rust_exhaustive_tree(X, Y, depth)
 
     tree_array <- matrix(0, nrow=length(node_list), 4)

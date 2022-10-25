@@ -7,9 +7,9 @@ for policy-learning. Aims to extend and speed up work done with the
 
 # Usage
 
-There’s just one function, `exhaustive_tree()`. Use it just as you would
-the `policy_tree()` function from the `policytree` package, and enjoy
-the parallelized speed!
+There’s just one function, `parallel_policy_tree()`. Use it just as you
+would the `policy_tree()` function from the `policytree` package, and
+enjoy the parallelized speed!
 
 Trees aren’t guaranteed to be exactly the same as those produced by
 `policytree` in that some leaves may be left unpruned (working on this),
@@ -31,20 +31,20 @@ best.action <- policytree:::predict_test_tree(best.tree, X)
 Y[cbind(1:n, best.action)] <- 100 * runif(n)
 best.reward <- sum(Y[cbind(1:n, best.action)])
 
-tree <- exhaustive_tree(X,Y,2)
+tree <- parallel_policy_tree(X,Y,2)
 
 tree
 #> policy_tree object 
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: b  split_value: -0.07 
-#>   (2) split_variable: a  split_value: 0.78 
+#> (1) split_variable: d  split_value: -0.72 
+#>   (2) split_variable: b  split_value: 0.19 
 #>     (4) * action: 1 
 #>     (5) * action: 2 
-#>   (3) split_variable: a  split_value: 0.79 
-#>     (6) * action: 3 
-#>     (7) * action: 2
+#>   (3) split_variable: d  split_value: 0.07 
+#>     (6) * action: 2 
+#>     (7) * action: 1
 ```
 
 # Installation

@@ -11,7 +11,7 @@ package.
 
 # Usage
 
-There's just one function, `exhaustive_tree()`. Use it just as you would the
+There's just one function, `parallel_policy_tree()`. Use it just as you would the
 `policy_tree()` function from the `policytree` package, and enjoy the parallelized speed!
 
 Trees aren't guaranteed to be exactly the same as those produced by
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
-library(exhaustivetree)
+library(parallelpolicytree)
 library(policytree)
 ```
 
@@ -45,7 +45,7 @@ best.action <- policytree:::predict_test_tree(best.tree, X)
 Y[cbind(1:n, best.action)] <- 100 * runif(n)
 best.reward <- sum(Y[cbind(1:n, best.action)])
 
-tree <- exhaustive_tree(X,Y,2)
+tree <- parallel_policy_tree(X,Y,2)
 
 tree
 
