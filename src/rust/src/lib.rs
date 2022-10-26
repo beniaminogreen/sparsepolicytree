@@ -1,15 +1,14 @@
 use extendr_api::prelude::*;
 use iter_utils::argmax;
+use ordered_float::OrderedFloat;
 use rayon::prelude::*;
 use std::collections::BTreeMap;
-use ordered_float::OrderedFloat;
 
 pub mod node;
 use crate::node::Node;
 
 pub mod observation_bundle;
 use crate::observation_bundle::ObservationBundle;
-
 
 fn new_sorted_sets(dataset: ArrayView2<OrderedFloat<f64>>) -> Vec<Vec<ObservationBundle>> {
     // Create new vetor to store binary tree maps
@@ -41,45 +40,50 @@ fn new_sorted_sets(dataset: ArrayView2<OrderedFloat<f64>>) -> Vec<Vec<Observatio
         sorted_sets.push(sorted_set);
     }
 
-    return sorted_sets
+    return sorted_sets;
 }
-
 
 #[derive(Clone)]
 struct TreeSearcher<'a> {
-    sets : &'a Vec<Vec<ObservationBundle>>,
-    active : Array1<bool>,
+    sets: &'a Vec<Vec<ObservationBundle>>,
+    active: Array1<bool>,
     scores: ArrayView2<'a, OrderedFloat<f64>>,
-    max_treatment_utils : Array1<OrderedFloat<f64>>
+    max_treatment_utils: Array1<OrderedFloat<f64>>,
 }
 
-impl<'a> TreeSearcher<'a>{
-    fn new_empty(sets : &'a Vec<Vec<ObservationBundle>>, scores : ArrayView2<'a, OrderedFloat<f64>>) -> Self{
-        TreeSearcher{
-            sets : sets,
-            scores : scores,
-            active : Array1::from_elem(scores.dim().0, false),
-            max_treatment_utils : Array1::from_elem(scores.dim().1,OrderedFloat(0.0)),
+impl<'a> TreeSearcher<'a> {
+    fn new_empty(
+        sets: &'a Vec<Vec<ObservationBundle>>,
+        scores: ArrayView2<'a, OrderedFloat<f64>>,
+    ) -> Self {
+        TreeSearcher {
+            sets: sets,
+            scores: scores,
+            active: Array1::from_elem(scores.dim().0, false),
+            max_treatment_utils: Array1::from_elem(scores.dim().1, OrderedFloat(0.0)),
         }
     }
 
-    fn new_full(sets : &'a Vec<Vec<ObservationBundle>>, scores : ArrayView2<'a, OrderedFloat<f64>>) -> Self{
-        let out = TreeSearcher{
-            sets : sets,
-            scores : scores,
-            active : Array1::from_elem(scores.dim().0, true),
-            max_treatment_utils : scores.sum_axis(Axis(0)),
+    fn new_full(
+        sets: &'a Vec<Vec<ObservationBundle>>,
+        scores: ArrayView2<'a, OrderedFloat<f64>>,
+    ) -> Self {
+        let out = TreeSearcher {
+            sets: sets,
+            scores: scores,
+            active: Array1::from_elem(scores.dim().0, true),
+            max_treatment_utils: scores.sum_axis(Axis(0)),
         };
 
         out
     }
 
-    fn add(&mut self, index: usize){
+    fn add(&mut self, index: usize) {
         self.active[index] = true;
         self.max_treatment_utils += &self.scores.index_axis(Axis(0), index);
     }
 
-    fn remove(&mut self, index: usize){
+    fn remove(&mut self, index: usize) {
         self.active[index] = false;
         self.max_treatment_utils -= &self.scores.index_axis(Axis(0), index);
     }
@@ -100,7 +104,7 @@ impl<'a> TreeSearcher<'a>{
 
             for bundle in self.sets[p].iter() {
                 for row_idx in bundle.indexes.iter() {
-                    if self.active[*row_idx]{
+                    if self.active[*row_idx] {
                         current_l_rewards += &self.scores.index_axis(Axis(0), *row_idx);
                         current_r_rewards -= &self.scores.index_axis(Axis(0), *row_idx);
                     }
@@ -125,17 +129,16 @@ impl<'a> TreeSearcher<'a>{
                 }
             }
         }
+
         Node::new_branch(best_l_leaf, best_r_leaf, best_axis, best_cut_point)
     }
 
     fn single_dimension_recursive_search(&self, dim: usize, depth: usize) -> Node {
-
         let mut best_r_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
         let mut best_l_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
 
         let mut best_split_point: OrderedFloat<f64> = OrderedFloat(0.0);
         let mut best_reward: OrderedFloat<f64> = OrderedFloat(-f64::INFINITY);
-
 
         let mut sets_r = self.clone();
         let mut sets_l = Self::new_empty(self.sets, self.scores);
@@ -164,7 +167,7 @@ impl<'a> TreeSearcher<'a>{
         return Node::new_branch(best_l_tree, best_r_tree, dim, best_split_point);
     }
 
-    fn recursive_tree_search(&self, depth: usize, top : bool) -> Node {
+    fn recursive_tree_search(&self, depth: usize, top: bool) -> Node {
         if depth == 1 {
             return self.search_single_split();
         } else if top {
@@ -188,12 +191,14 @@ impl<'a> TreeSearcher<'a>{
                 let mut sets_r = self.clone();
                 let mut sets_l = Self::new_empty(self.sets, self.scores);
 
-                for bundle in &sets_r.sets[p] {
+                for bundle in sets_r.sets[p].iter() {
                     let cut_point = bundle.cut_point;
 
                     for index in &bundle.indexes {
-                        sets_l.add(*index);
-                        sets_r.remove(*index);
+                        if self.active[*index] {
+                            sets_l.add(*index);
+                            sets_r.remove(*index);
+                        }
                     }
 
                     let tree_l = sets_l.recursive_tree_search(depth - 1, false);
@@ -211,11 +216,10 @@ impl<'a> TreeSearcher<'a>{
                 }
             }
 
-            return Node::new_branch(best_l_tree, best_r_tree, best_split_axis, best_split_point)
+            return Node::new_branch(best_l_tree, best_r_tree, best_split_axis, best_split_point);
         }
     }
 }
-
 
 #[extendr]
 fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
@@ -231,11 +235,13 @@ fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
     // let test = SortedSets::new_populated(x_mat.view(), scores_mat.view());
     // let search_results = test.recursive_tree_search(depth as usize, true);
 
-    let test=new_sorted_sets(x_mat.view());
+    let test = new_sorted_sets(x_mat.view());
 
     let searcher = TreeSearcher::new_full(&test, scores_mat.view());
 
-    let search_results = searcher.recursive_tree_search(depth as usize, true);
+    let mut search_results = searcher.recursive_tree_search(depth as usize, true);
+
+    // search_results.prune();
 
     search_results.r_representation()
 }

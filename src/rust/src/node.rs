@@ -4,12 +4,13 @@ use ordered_float::OrderedFloat;
 use std::cmp::Ordering;
 use std::collections::VecDeque;
 
-#[derive(Debug, Eq, PartialEq, Clone)]
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
 pub enum NodeType {
     Leaf,
     Branch,
 }
 
+// Note to self: This should have been an enum
 #[derive(Debug, Clone)]
 pub struct Node {
     pub node_type: NodeType,
@@ -26,7 +27,7 @@ impl Node {
         Self {
             node_type: NodeType::Leaf,
             action: Some(action),
-            reward: reward,
+            reward,
             left_child: None,
             right_child: None,
             cut_axis: None,
@@ -83,6 +84,72 @@ impl Node {
         }
 
         List::from_values(output)
+    }
+
+    pub fn prune(&mut self) {
+        if matches!(self.node_type, NodeType::Leaf) {
+            return
+        }
+
+        // Make Sure that no branch has two leaves that reccomend the same action
+        match (self.left_child.as_ref().unwrap().node_type, self.right_child.as_ref().unwrap().node_type) {
+            (NodeType::Branch, NodeType::Leaf) => {
+                self.left_child.as_mut().unwrap().prune();
+                self.prune();
+            }
+            (NodeType::Leaf, NodeType::Branch) => {
+                self.right_child.as_mut().unwrap().prune();
+                self.prune();
+            }
+            (NodeType::Branch, NodeType::Branch) => {
+
+                // Make sure that no cuts are made twice in a row. This is a mess, but it's not performance-critical
+                if self.left_child.as_ref().unwrap().cut_axis.unwrap() == self.cut_axis.unwrap() {
+                    if self.left_child.as_ref().unwrap().cut_point.unwrap() == self.cut_point.unwrap() {
+                        self.left_child = self.left_child.as_ref().unwrap().left_child.clone()
+                    }
+                }
+
+                if self.right_child.as_ref().unwrap().cut_axis.unwrap() == self.cut_axis.unwrap() {
+                    if self.right_child.as_ref().unwrap().cut_point.unwrap() == self.cut_point.unwrap() {
+                        self.right_child = self.left_child.as_ref().unwrap().right_child.clone()
+                    }
+                }
+
+
+                self.left_child.as_mut().unwrap().prune();
+                self.right_child.as_mut().unwrap().prune();
+                match (self.left_child.as_ref().unwrap().node_type, self.right_child.as_ref().unwrap().node_type) {
+                    (NodeType::Leaf, NodeType::Leaf) => {
+                        // println!("D");
+                        if self.left_child.as_ref().unwrap().action == self.right_child.as_ref().unwrap().action {
+                            self.node_type = NodeType::Leaf;
+                            self.action = self.left_child.as_ref().unwrap().action;
+                            self.reward =  self.left_child.as_ref().unwrap().reward + self.right_child.as_ref().unwrap().reward;
+                            self.left_child =  None;
+                            self.right_child =  None;
+                            self.cut_axis =  None;
+                            self.cut_point =  None;
+                        }
+                    }
+                    (_,_) => ()
+                }
+            }
+            (NodeType::Leaf, NodeType::Leaf) => {
+                // println!("D");
+                if self.left_child.as_ref().unwrap().action == self.right_child.as_ref().unwrap().action {
+                    self.node_type = NodeType::Leaf;
+                    self.action = self.left_child.as_ref().unwrap().action;
+                    self.reward =  self.left_child.as_ref().unwrap().reward + self.right_child.as_ref().unwrap().reward;
+                    self.left_child =  None;
+                    self.right_child =  None;
+                    self.cut_axis =  None;
+                    self.cut_point =  None;
+                }
+            }
+        }
+
+
     }
 }
 
