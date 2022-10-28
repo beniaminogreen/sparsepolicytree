@@ -1,5 +1,7 @@
 use ordered_float::OrderedFloat;
 
+// ObservationBundle Struct Associates Several observations with the same predictor value into a
+// bundle, so they can all be removed / added to a leaf at once
 pub struct ObservationBundle{
     pub cut_point : OrderedFloat<f64>,
     pub indexes : Vec<usize>

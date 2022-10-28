@@ -10,6 +10,8 @@ use crate::node::Node;
 pub mod observation_bundle;
 use crate::observation_bundle::ObservationBundle;
 
+// Creates Sorted Sets from a view of the original datasets. Sorts sets using binary trees, then
+// turns them into a vector of observation bundles to save time
 fn new_sorted_sets(dataset: ArrayView2<OrderedFloat<f64>>) -> Vec<Vec<ObservationBundle>> {
     // Create new vetor to store binary tree maps
     let mut btree_vec = Vec::new();
@@ -43,6 +45,11 @@ fn new_sorted_sets(dataset: ArrayView2<OrderedFloat<f64>>) -> Vec<Vec<Observatio
     return sorted_sets;
 }
 
+// Tree Search Struct. Keeps a reference to the sorted sets, but does not change them so they don't
+// have to be copied / modified. The observations that are in consideration are stored in the
+// `active` field, which is a boolean vector Also keeps track of the utility from giving every unit
+// each of the possible treatments, which cuts out the use of an array in the `search single
+// dimension` part of the algotithm
 #[derive(Clone)]
 struct TreeSearcher<'a> {
     sets: &'a Vec<Vec<ObservationBundle>>,
@@ -88,6 +95,8 @@ impl<'a> TreeSearcher<'a> {
         self.max_treatment_utils -= &self.scores.index_axis(Axis(0), index);
     }
 
+    // Search Single Split. Direct Analogue of the algorithm from the paper, but the rewards from
+    // assigning every unit a treatment are already calculated, so no arrays are needed.
     fn search_single_split(&self) -> Node {
         let nd: usize = self.scores.dim().1;
         let np: usize = self.sets.len();
@@ -133,6 +142,8 @@ impl<'a> TreeSearcher<'a> {
         Node::new_branch(best_l_leaf, best_r_leaf, best_axis, best_cut_point)
     }
 
+    // Single dimension recursive search. Runs an exhaustive search, but is only able to consider splits along one axis in the top node.
+    // Used for paralleization with Rayon.
     fn single_dimension_recursive_search(&self, dim: usize, depth: usize) -> Node {
         let mut best_r_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
         let mut best_l_tree = Node::new_leaf(OrderedFloat(-f64::INFINITY), 0);
@@ -167,6 +178,7 @@ impl<'a> TreeSearcher<'a> {
         return Node::new_branch(best_l_tree, best_r_tree, dim, best_split_point);
     }
 
+    // Proper recursive tree search. Taken almost directly from policytree package.
     fn recursive_tree_search(&self, depth: usize, top: bool) -> Node {
         if depth == 1 {
             return self.search_single_split();
@@ -221,6 +233,7 @@ impl<'a> TreeSearcher<'a> {
     }
 }
 
+// function called from R. Process data into matrix of OrderedFloats, then run search.
 #[extendr]
 fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
     let x_mat = <ArrayView2<f64>>::from_robj(&x_robj)
@@ -239,9 +252,11 @@ fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
 
     let searcher = TreeSearcher::new_full(&test, scores_mat.view());
 
-    let mut search_results = searcher.recursive_tree_search(depth as usize, true);
+    let search_results = searcher.recursive_tree_search(depth as usize, true);
 
-    // search_results.prune();
+    // for _ in 0..depth {
+    //     search_results.prune();
+    // }
 
     search_results.r_representation()
 }

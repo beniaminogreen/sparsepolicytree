@@ -64,6 +64,7 @@ impl Node {
                 NodeType::Leaf => {
                     output.push(list!(is_leaf = true, action = current.action.unwrap()+1));
                 }
+
                 NodeType::Branch => {
                     let left_child = *current.left_child.unwrap();
                     let right_child = *current.right_child.unwrap();
@@ -95,44 +96,39 @@ impl Node {
         match (self.left_child.as_ref().unwrap().node_type, self.right_child.as_ref().unwrap().node_type) {
             (NodeType::Branch, NodeType::Leaf) => {
                 self.left_child.as_mut().unwrap().prune();
-                self.prune();
             }
             (NodeType::Leaf, NodeType::Branch) => {
                 self.right_child.as_mut().unwrap().prune();
-                self.prune();
             }
-            (NodeType::Branch, NodeType::Branch) => {
 
+            (NodeType::Branch, NodeType::Branch) => {
                 // Make sure that no cuts are made twice in a row. This is a mess, but it's not performance-critical
                 if self.left_child.as_ref().unwrap().cut_axis.unwrap() == self.cut_axis.unwrap() {
                     if self.left_child.as_ref().unwrap().cut_point.unwrap() == self.cut_point.unwrap() {
-                        self.left_child = self.left_child.as_ref().unwrap().left_child.clone()
+                        self.left_child = self.left_child.as_ref().unwrap().left_child.clone();
                     }
-                }
-
-                if self.right_child.as_ref().unwrap().cut_axis.unwrap() == self.cut_axis.unwrap() {
+                } else if self.right_child.as_ref().unwrap().cut_axis.unwrap() == self.cut_axis.unwrap() {
                     if self.right_child.as_ref().unwrap().cut_point.unwrap() == self.cut_point.unwrap() {
-                        self.right_child = self.left_child.as_ref().unwrap().right_child.clone()
+                        self.right_child = self.right_child.as_ref().unwrap().right_child.clone();
                     }
-                }
-
-
-                self.left_child.as_mut().unwrap().prune();
-                self.right_child.as_mut().unwrap().prune();
-                match (self.left_child.as_ref().unwrap().node_type, self.right_child.as_ref().unwrap().node_type) {
-                    (NodeType::Leaf, NodeType::Leaf) => {
-                        // println!("D");
-                        if self.left_child.as_ref().unwrap().action == self.right_child.as_ref().unwrap().action {
-                            self.node_type = NodeType::Leaf;
-                            self.action = self.left_child.as_ref().unwrap().action;
-                            self.reward =  self.left_child.as_ref().unwrap().reward + self.right_child.as_ref().unwrap().reward;
-                            self.left_child =  None;
-                            self.right_child =  None;
-                            self.cut_axis =  None;
-                            self.cut_point =  None;
+                } else {
+                    self.left_child.as_mut().unwrap().prune();
+                    self.right_child.as_mut().unwrap().prune();
+                    match (self.left_child.as_ref().unwrap().node_type, self.right_child.as_ref().unwrap().node_type) {
+                        (NodeType::Leaf, NodeType::Leaf) => {
+                            // println!("D");
+                            if self.left_child.as_ref().unwrap().action == self.right_child.as_ref().unwrap().action {
+                                self.node_type = NodeType::Leaf;
+                                self.action = self.left_child.as_ref().unwrap().action;
+                                self.reward =  self.left_child.as_ref().unwrap().reward + self.right_child.as_ref().unwrap().reward;
+                                self.left_child =  None;
+                                self.right_child =  None;
+                                self.cut_axis =  None;
+                                self.cut_point =  None;
+                            }
                         }
+                        (_,_) => ()
                     }
-                    (_,_) => ()
                 }
             }
             (NodeType::Leaf, NodeType::Leaf) => {
