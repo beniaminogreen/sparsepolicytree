@@ -51,9 +51,22 @@ tree
 
 ```
 
-
 # Installation
 
-You must have [Rust](https://www.rust-lang.org/tools/install) installed to
-compile this package.
+## Installing Rust:
 
+You must have [Rust](https://www.rust-lang.org/tools/install) installed to
+compile this package. The rust website provides an excellent installation
+script that has never caused me any issues.
+
+On Linux, you can install Rust with:
+
+```{sh, eval=F}
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+On Windows, I use the rust installation wizard, found
+[here](https://forge.rust-lang.org/infra/other-installation-methods.html).
+
+Once you install rust, you should be able to install the package with
+`devtools::install_github("Yale-Medicaid/parallel_policy_tree")`.

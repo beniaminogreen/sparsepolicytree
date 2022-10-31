@@ -38,16 +38,31 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: d  split_value: -0.72 
-#>   (2) split_variable: b  split_value: 0.19 
-#>     (4) * action: 1 
-#>     (5) * action: 2 
-#>   (3) split_variable: d  split_value: 0.07 
+#> (1) split_variable: b  split_value: 0.21 
+#>   (2) split_variable: d  split_value: 0.09 
+#>     (4) * action: 2 
+#>     (5) * action: 1 
+#>   (3) split_variable: c  split_value: 1.4 
 #>     (6) * action: 2 
-#>     (7) * action: 1
+#>     (7) * action: 3
 ```
 
 # Installation
 
+## Installing Rust:
+
 You must have [Rust](https://www.rust-lang.org/tools/install) installed
-to compile this package.
+to compile this package. The rust website provides an excellent
+installation script that has never caused me any issues.
+
+On Linux, you can install Rust with:
+
+``` sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+On Windows, I use the rust installation wizard, found
+[here](https://forge.rust-lang.org/infra/other-installation-methods.html).
+
+Once you install rust, you should be able to install the package with
+`devtools::install_github("Yale-Medicaid/parallel_policy_tree")`.

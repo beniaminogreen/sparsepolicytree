@@ -1,5 +1,5 @@
 test_that("produces same classifications as policytree for depth 1", {
- for (i in 1:20) {
+ for (i in 1:30) {
 
     n <- 400
     p <- 4
@@ -35,7 +35,7 @@ test_that("produces same classifications as policytree for depth 1", {
 })
 
 test_that("produces same classifications as policytree for depth 2", {
- for (i in 1:20) {
+ for (i in 1:30) {
 
     n <- 400
     p <- 4
@@ -70,7 +70,7 @@ test_that("produces same classifications as policytree for depth 2", {
 })
 
 test_that("produces same classifications as policytree for depth 3", {
- for (i in 1:10) {
+ for (i in 1:20) {
 
     n <- 400
     p <- 2
