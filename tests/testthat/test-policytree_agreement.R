@@ -19,7 +19,7 @@ test_that("produces same classifications as policytree for depth 1", {
     expect_equal(predict(tree_1,X),predict(tree_2,X))
 
     # Classification task taken from policytree tests
-    X <- matrix(as.numeric(sample(10:20, n * p, replace = TRUE)), n, p)
+    X <- matrix(sample(10:20, n * p, replace = TRUE), n, p)
     Y <- matrix(0, n, d)
 
     tree_1 <- parallel_policy_tree(X,Y,1)
@@ -55,7 +55,7 @@ test_that("produces same classifications as policytree for depth 2", {
     expect_equal(predict(tree_1,X),predict(tree_2,X))
 
     # Classification task taken from policytree tests
-    X <- matrix(as.numeric(sample(10:20, n * p, replace = TRUE)), n, p)
+    X <- matrix(sample(10:20, n * p, replace = TRUE), n, p)
     Y <- matrix(0, n, d)
 
     best.tree <- policytree:::make_tree(X, depth = depth, d = d)
@@ -90,7 +90,7 @@ test_that("produces same classifications as policytree for depth 3", {
     expect_equal(predict(tree_1,X),predict(tree_2,X))
 
     # Classification task taken from policytree tests
-    X <- matrix(as.numeric(sample(1:5, n * p, replace = TRUE)), n, p)
+    X <- matrix(sample(1:5, n * p, replace = TRUE), n, p)
     Y <- matrix(0, n, d)
 
     best.tree <- policytree:::make_tree(X, depth = depth, d = d)

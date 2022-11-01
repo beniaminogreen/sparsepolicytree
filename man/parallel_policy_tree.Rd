@@ -4,7 +4,7 @@
 \alias{parallel_policy_tree}
 \title{Return string \code{"Hello world!"} to R.}
 \usage{
-parallel_policy_tree(X, Y, depth)
+parallel_policy_tree(X, Gamma, depth)
 }
 \description{
 Return string \code{"Hello world!"} to R.
