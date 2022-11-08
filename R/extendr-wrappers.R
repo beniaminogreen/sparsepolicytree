@@ -10,3 +10,5 @@ NULL
 
 rust_exhaustive_tree <- function(x_robj, gamma_robj, depth) .Call(wrap__rust_exhaustive_tree, x_robj, gamma_robj, depth)
 
+rust_predict <- function(r_tree_mat, x_robj) .Call(wrap__rust_predict, r_tree_mat, x_robj)
+
