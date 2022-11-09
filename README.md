@@ -70,3 +70,11 @@ Once you install Rust, you should be able to install the package with:
 ``` r
 devtools::install_github("Yale-Medicaid/parallel_policy_tree")
 ```
+
+Then you can simply load the package into memory with: 
+
+
+``` r
+library(parallelpolicytree)
+```
+
