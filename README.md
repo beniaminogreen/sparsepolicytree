@@ -38,13 +38,13 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: d  split_value: 0.45 
-#>   (2) split_variable: b  split_value: 0.15 
+#> (1) split_variable: b  split_value: 0.21 
+#>   (2) split_variable: d  split_value: 0.09 
 #>     (4) * action: 2 
-#>     (5) * action: 3 
-#>   (3) split_variable: b  split_value: -2.76 
+#>     (5) * action: 1 
+#>   (3) split_variable: c  split_value: 1.4 
 #>     (6) * action: 2 
-#>     (7) * action: 1
+#>     (7) * action: 3
 ```
 
 # Installation
@@ -64,8 +64,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 On Windows, I use the rust installation wizard, found
 [here](https://forge.rust-lang.org/infra/other-installation-methods.html).
 
-Once you install rust, you should be able to install the package with:
-
-``` r
-devtools::install_github("Yale-Medicaid/parallel_policy_tree")
-```
+Once you install rust, you should be able to install the package with
+`devtools::install_github("Yale-Medicaid/parallel_policy_tree")`.
