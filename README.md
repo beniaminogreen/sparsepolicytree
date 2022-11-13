@@ -63,9 +63,18 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 On Windows, I use the rust installation wizard, found
 [here](https://forge.rust-lang.org/infra/other-installation-methods.html).
+I've never used a Mac in my life. 
 
-Once you install rust, you should be able to install the package with:
+Once you install Rust, you should be able to install the package with:
 
 ``` r
 devtools::install_github("Yale-Medicaid/parallel_policy_tree")
 ```
+
+Then you can simply load the package into memory with: 
+
+
+``` r
+library(parallelpolicytree)
+```
+
