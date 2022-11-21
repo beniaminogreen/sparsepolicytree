@@ -29,15 +29,20 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+
     steps:
       - name: Set up Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: stable
-          default: true
+          toolchain: ${{ matrix.config.rust }}
 
-      - name: Additional Rust set up for Windows
-        if: runner.os == 'Windows'
+      - name: Additional Rust set up for Windows (R >= 4.2)
+        if: runner.os == 'Windows' && matrix.config.r != 'oldrel'
+        run: |
+          rustup target add x86_64-pc-windows-gnu
+
+      - name: Additional Rust set up for Windows (R < 4.2)
+        if: runner.os == 'Windows' && matrix.config.r == 'oldrel'
         run: |
           rustup target add i686-pc-windows-gnu
           rustup target add x86_64-pc-windows-gnu
