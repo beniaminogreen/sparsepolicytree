@@ -1,8 +1,8 @@
 
-# Parallel Policy Tree
+# Sparse Policy Tree
 
-An R / Rust Package to implement a parallelized exhaustive tree search
-for policy-learning. Aims to extend and speed up work done with the
+An R / Rust Package to implement an exhaustive tree search for
+policy-learning. Aims to extend and speed up work done with the
 `policytree` package.
 
 # Usage
@@ -37,13 +37,13 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: b  split_value: -0.62 
-#>   (2) split_variable: a  split_value: 0.98 
-#>     (4) * action: 2 
+#> (1) split_variable: d  split_value: 1.97 
+#>   (2) split_variable: a  split_value: -3.04 
+#>     (4) * action: 1 
 #>     (5) * action: 1 
-#>   (3) split_variable: a  split_value: 0.99 
-#>     (6) * action: 3 
-#>     (7) * action: 1
+#>   (3) split_variable: a  split_value: 1.23 
+#>     (6) * action: 2 
+#>     (7) * action: 3
 ```
 
 # Installation

@@ -600,10 +600,10 @@ padding-top: 0px;
 
 <body>
 
-<h1 id="parallel-policy-tree">Parallel Policy Tree</h1>
-<p>An R / Rust Package to implement a parallelized exhaustive tree
-search for policy-learning. Aims to extend and speed up work done with
-the <code>policytree</code> package.</p>
+<h1 id="sparse-policy-tree">Sparse Policy Tree</h1>
+<p>An R / Rust Package to implement an exhaustive tree search for
+policy-learning. Aims to extend and speed up work done with the
+<code>policytree</code> package.</p>
 <h1 id="usage">Usage</h1>
 <p>There’s just one function, <code>sparse_policy_tree()</code>. Use it
 just as you would the <code>policy_tree()</code> function from the
@@ -633,13 +633,13 @@ just as you would the <code>policy_tree()</code> function from the
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tree depth:  2 </span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Actions:  1 2 3 </span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variable splits: </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: b  split_value: -0.62 </span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: a  split_value: 0.98 </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (4) * action: 2 </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: d  split_value: 1.97 </span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: a  split_value: -3.04 </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (4) * action: 1 </span></span>
 <span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (5) * action: 1 </span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: a  split_value: 0.99 </span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 3 </span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (7) * action: 1</span></span></code></pre></div>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: a  split_value: 1.23 </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 2 </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (7) * action: 3</span></span></code></pre></div>
 <h1 id="installation">Installation</h1>
 <h2 id="installing-rust">Installing Rust:</h2>
 <p>You must have <a href="https://www.rust-lang.org/tools/install">Rust</a> installed to

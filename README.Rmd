@@ -3,9 +3,9 @@ output: github_document
 always_allow_html: true
 ---
 
-# Parallel Policy Tree
+# Sparse Policy Tree
 
-An R / Rust Package to implement a parallelized exhaustive tree search for
+An R / Rust Package to implement an exhaustive tree search for
 policy-learning. Aims to extend and speed up work done with the `policytree`
 package.
 
