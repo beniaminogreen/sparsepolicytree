@@ -18,9 +18,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release',  rust: 'stable-gnu', rtools-version: '42'}
-          - {os: windows-latest, r: 'devel',    rust: 'stable-gnu', rtools-version: '42'}
-          - {os: windows-latest, r: 'oldrel',   rust: 'stable-msvc'}
           - {os: macOS-latest,   r: 'release',  rust: 'stable'     }
           - {os: ubuntu-20.04,   r: 'release',  rust: 'stable'     }
           - {os: ubuntu-20.04,   r: 'devel',    rust: 'stable'     }
@@ -35,21 +32,6 @@ jobs:
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.config.rust }}
-
-      - name: Additional Rust set up for Windows (R >= 4.2)
-        if: runner.os == 'Windows' && matrix.config.r != 'oldrel'
-        run: |
-          rustup toolchain uninstall stable
-          rustup toolchain install stable
-          rustup target add x86_64-pc-windows-gnu
-
-      - name: Additional Rust set up for Windows (R < 4.2)
-        if: runner.os == 'Windows' && matrix.config.r == 'oldrel'
-        run: |
-          rustup toolchain uninstall stable
-          rustup toolchain install stable
-          rustup target add i686-pc-windows-gnu
-          rustup target add x86_64-pc-windows-gnu
 
       - uses: actions/checkout@v2
 
