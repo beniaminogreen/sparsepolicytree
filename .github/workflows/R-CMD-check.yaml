@@ -39,11 +39,15 @@ jobs:
       - name: Additional Rust set up for Windows (R >= 4.2)
         if: runner.os == 'Windows' && matrix.config.r != 'oldrel'
         run: |
+          rustup toolchain uninstall stable
+          rustup toolchain install stable
           rustup target add x86_64-pc-windows-gnu
 
       - name: Additional Rust set up for Windows (R < 4.2)
         if: runner.os == 'Windows' && matrix.config.r == 'oldrel'
         run: |
+          rustup toolchain uninstall stable
+          rustup toolchain install stable
           rustup target add i686-pc-windows-gnu
           rustup target add x86_64-pc-windows-gnu
 
