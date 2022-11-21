@@ -40,12 +40,15 @@ jobs:
         if: runner.os == 'Windows' && matrix.config.r != 'oldrel'
         run: |
           rustup target add x86_64-pc-windows-gnu
+          rustup target add stable-x86_64-pc-windows-gnu
 
       - name: Additional Rust set up for Windows (R < 4.2)
         if: runner.os == 'Windows' && matrix.config.r == 'oldrel'
         run: |
           rustup target add i686-pc-windows-gnu
           rustup target add x86_64-pc-windows-gnu
+          rustup target add stable-x86_64-pc-windows-gnu
+          rustup target add stable-i686-pc-windows-gnu
 
       - uses: actions/checkout@v2
 
