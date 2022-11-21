@@ -13,7 +13,7 @@ test_that("produces same classifications as policytree for depth 1", {
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    tree_1 <- parallel_policy_tree(X,Y,1)
+    tree_1 <- sparse_policy_tree(X,Y,1)
     tree_2 <- policytree:::policy_tree(X,Y,1)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))
@@ -22,12 +22,12 @@ test_that("produces same classifications as policytree for depth 1", {
     X <- matrix(sample(10:20, n * p, replace = TRUE), n, p)
     Y <- matrix(0, n, d)
 
-    tree_1 <- parallel_policy_tree(X,Y,1)
+    tree_1 <- sparse_policy_tree(X,Y,1)
     best.tree <- policytree:::make_tree(X, depth = depth, d = d)
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    tree_1 <- parallel_policy_tree(X,Y,1)
+    tree_1 <- sparse_policy_tree(X,Y,1)
     tree_2 <- policytree:::policy_tree(X,Y,1)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))
@@ -49,7 +49,7 @@ test_that("produces same classifications as policytree for depth 2", {
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    tree_1 <- parallel_policy_tree(X,Y,2)
+    tree_1 <- sparse_policy_tree(X,Y,2)
     tree_2 <- policytree:::policy_tree(X,Y,2)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))
@@ -62,7 +62,7 @@ test_that("produces same classifications as policytree for depth 2", {
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    tree_1 <- parallel_policy_tree(X,Y,2)
+    tree_1 <- sparse_policy_tree(X,Y,2)
     tree_2 <- policytree:::policy_tree(X,Y,2)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))
@@ -84,7 +84,7 @@ test_that("produces same classifications as policytree for depth 3", {
     best.tree <- policytree:::make_tree(X, depth = depth, d = d)
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
-    tree_1 <- parallel_policy_tree(X,Y,3)
+    tree_1 <- sparse_policy_tree(X,Y,3)
     tree_2 <- policytree:::policy_tree(X,Y,3)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))
@@ -97,7 +97,7 @@ test_that("produces same classifications as policytree for depth 3", {
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    tree_1 <- parallel_policy_tree(X,Y,3)
+    tree_1 <- sparse_policy_tree(X,Y,3)
     tree_2 <- policytree:::policy_tree(X,Y,3)
 
     expect_equal(predict(tree_1,X),predict(tree_2,X))

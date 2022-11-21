@@ -265,7 +265,7 @@ fn rust_exhaustive_tree(x_robj: Robj, gamma_robj: Robj, depth: i64) -> List {
 // This ensures exported functions are registered with R.
 // See corresponding C code in `entrypoint.c`.
 extendr_module! {
-    mod parallelpolicytree;
+    mod sparsepolicytree;
     fn rust_exhaustive_tree;
 }
 

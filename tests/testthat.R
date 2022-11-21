@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/reference/test_package.html#special-files
 
 library(testthat)
-library(parallelpolicytree)
+library(sparsepolicytree)
 
-test_check("parallelpolicytree")
+test_check("sparsepolicytree")

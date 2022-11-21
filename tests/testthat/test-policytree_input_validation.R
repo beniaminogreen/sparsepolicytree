@@ -11,7 +11,7 @@ test_that("policytree validates that X and G have same number of rows", {
     best.action <- policytree:::predict_test_tree(best.tree, X)
     Y[cbind(1:n, best.action)] <- 100 * runif(n)
 
-    expect_error(parallel_policy_tree(head(X),Y,1), "number of rows")
+    expect_error(sparse_policy_tree(head(X),Y,1), "number of rows")
 
 })
 
@@ -31,7 +31,7 @@ test_that("policytree validates that depth is positive", {
 
 
 
-    expect_error(parallel_policy_tree(X,Y,-5),
+    expect_error(sparse_policy_tree(X,Y,-5),
                  "`depth` cannot be negative.")
 
 })
@@ -53,7 +53,7 @@ test_that("policytree checks for no missing values in X", {
 
 
 
-    expect_error(parallel_policy_tree(X,Y,1),
+    expect_error(sparse_policy_tree(X,Y,1),
                  "Covariate matrix X contains missing values.")
 
 })
@@ -75,7 +75,7 @@ test_that("policytree checks for no missing values in Gamma", {
 
 
 
-    expect_error(parallel_policy_tree(X,Y,1),
+    expect_error(sparse_policy_tree(X,Y,1),
                  "Gamma matrix contains missing values.")
 
 })

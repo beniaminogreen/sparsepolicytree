@@ -1,7 +1,7 @@
 TARGET_DIR = ./rust/target
 LIBDIR = $(TARGET_DIR)/release
-STATLIB = $(LIBDIR)/libparallelpolicytree.a
-PKG_LIBS = -L$(LIBDIR) -lparallelpolicytree
+STATLIB = $(LIBDIR)/libsparsepolicytree.a
+PKG_LIBS = -L$(LIBDIR) -lsparsepolicytree
 
 all: C_clean
 

@@ -1,14 +1,11 @@
 [package]
-name = 'parallelpolicytree'
+name = 'sparsepolicytree'
 version = '0.1.0'
 edition = '2021'
 
 [lib]
 crate-type = [ 'staticlib' ]
-name = 'parallelpolicytree'
-
-[profile.release]
-debug = true
+name = 'sparsepolicytree'
 
 [dependencies]
 binary_search_tree = "0.2.2"

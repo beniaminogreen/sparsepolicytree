@@ -1,6 +1,6 @@
 #' Return string `"Hello world!"` to R.
 #' @export
-parallel_policy_tree <- function(X, Gamma, depth) {
+sparse_policy_tree <- function(X, Gamma, depth) {
   n_obs <- nrow(X)
   valid_classes <- c("matrix")
 
