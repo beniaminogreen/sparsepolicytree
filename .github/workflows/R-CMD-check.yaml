@@ -63,4 +63,5 @@ jobs:
           error-on: '"error"'
 
       - name: debug install
+        if: always()
         run: cat ./check/*.Rcheck/00install.out
