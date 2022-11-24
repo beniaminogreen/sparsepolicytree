@@ -37,11 +37,11 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: d  split_value: 1.97 
-#>   (2) split_variable: a  split_value: -3.04 
-#>     (4) * action: 1 
-#>     (5) * action: 1 
-#>   (3) split_variable: a  split_value: 1.23 
+#> (1) split_variable: c  split_value: 1.61 
+#>   (2) split_variable: a  split_value: -3.37 
+#>     (4) * action: 3 
+#>     (5) * action: 3 
+#>   (3) split_variable: c  split_value: 1.92 
 #>     (6) * action: 2 
 #>     (7) * action: 3
 ```
@@ -68,3 +68,21 @@ Once you install rust, you should be able to install the package with:
 ``` r
 devtools::install_github("Yale-Medicaid/sparsepolicytree")
 ```
+
+## Benchmarks:
+
+| Number of Observations | Number of Distinct Predictor Values | Number of Predictors | Number of Treatments | Time   |
+|------------------------|-------------------------------------|----------------------|----------------------|--------|
+| 10^2                   | 2                                   | 30                   | 20                   | 0.003s |
+| 10^3                   | 2                                   | 30                   | 20                   | 0.015s |
+| 10^4                   | 2                                   | 30                   | 20                   | 0.15s  |
+| 10^5                   | 2                                   | 30                   | 20                   | 1.57s  |
+| 10^6                   | 2                                   | 30                   | 20                   | 17s    |
+| 10^2                   | 30                                  | 30                   | 20                   | 0.052s |
+| 10^3                   | 30                                  | 30                   | 20                   | 0.240s |
+| 10^4                   | 30                                  | 30                   | 20                   | 3.041s |
+| 10^5                   | 30                                  | 30                   | 20                   | 100s   |
+| 10^6                   | 30                                  | 30                   | 20                   | 21 min |
+| 10^2                   | 10^2                                | 30                   | 20                   | 0.41s  |
+| 10^3                   | 10^3                                | 30                   | 20                   | 40s    |
+| 10^4                   | 10^3                                | 30                   | 20                   | 70 min |
