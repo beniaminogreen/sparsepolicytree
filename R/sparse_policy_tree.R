@@ -1,5 +1,3 @@
-#' Sparse Policy Tree
-#'
 #' @param X The covariates used for splitting in the tree (dimension NxP)
 #' @param Gamma Rewards for each action / treatment (dimension NXD)
 #' @param depth The number of variables.
