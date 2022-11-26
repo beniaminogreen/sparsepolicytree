@@ -1,7 +1,5 @@
 
-# Sparse Policy Tree
-
-<img src='logo.png' align="right" height="120">
+# Sparse Policy Tree <img src='logo.png' align="right" height="120">
 
 An R / Rust Package to implement an exhaustive tree search for
 policy-learning. Aims to extend and speed up work done with the
@@ -39,12 +37,12 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: a  split_value: -0.42 
-#>   (2) split_variable: c  split_value: -0.5 
+#> (1) split_variable: d  split_value: -3.35 
+#>   (2) split_variable: a  split_value: -2.49 
 #>     (4) * action: 1 
-#>     (5) * action: 2 
-#>   (3) split_variable: a  split_value: 0.36 
-#>     (6) * action: 2 
+#>     (5) * action: 3 
+#>   (3) split_variable: a  split_value: -2.49 
+#>     (6) * action: 3 
 #>     (7) * action: 3
 ```
 
