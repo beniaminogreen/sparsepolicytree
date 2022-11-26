@@ -1,5 +1,5 @@
 
-# Sparse Policy Tree
+# Sparse Policy Tree <img src='logo.png' align="right" height="150">
 
 An R / Rust Package to implement an exhaustive tree search for
 policy-learning. Aims to extend and speed up work done with the
@@ -37,12 +37,12 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: c  split_value: 1.61 
-#>   (2) split_variable: a  split_value: -3.37 
-#>     (4) * action: 3 
+#> (1) split_variable: d  split_value: -2.92 
+#>   (2) split_variable: a  split_value: -3.51 
+#>     (4) * action: 1 
 #>     (5) * action: 3 
-#>   (3) split_variable: c  split_value: 1.92 
-#>     (6) * action: 2 
+#>   (3) split_variable: a  split_value: -3.51 
+#>     (6) * action: 3 
 #>     (7) * action: 3
 ```
 
@@ -85,4 +85,4 @@ devtools::install_github("Yale-Medicaid/sparsepolicytree")
 | 10^6                   | 30                                  | 30                   | 20                   | 21 min |
 | 10^2                   | 10^2                                | 30                   | 20                   | 0.41s  |
 | 10^3                   | 10^3                                | 30                   | 20                   | 40s    |
-| 10^4                   | 10^3                                | 30                   | 20                   | 70 min |
+| 10^4                   | 10^4                                | 30                   | 20                   | 70 min |
