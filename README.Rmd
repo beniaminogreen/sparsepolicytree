@@ -3,7 +3,7 @@ output: github_document
 always_allow_html: true
 ---
 
-# Sparse Policy Tree <img src='logo.png' align="right" height="120">
+# Sparse Policy Tree <img src='logo.png' align="right" height="150">
 
 An R / Rust Package to implement an exhaustive tree search for
 policy-learning. Aims to extend and speed up work done with the `policytree`
