@@ -634,14 +634,14 @@ just as you would the <code>policy_tree()</code> function from the
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tree depth:  2 </span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Actions:  1 2 3 </span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variable splits: </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: b  split_value: 0.19 </span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: c  split_value: -0.74 </span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: b  split_value: -0.73 </span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: a  split_value: -3.36 </span></span>
 <span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (4) * action: 3 </span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (5) * action: 2 </span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: d  split_value: 0.91 </span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 1 </span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (5) * action: 3 </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: a  split_value: 0.57 </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 3 </span></span>
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (7) * action: 2</span></span></code></pre></div>
-<h1 id="installation">Installation</h1>
+<h1 id="installation">Installation:</h1>
 <h2 id="installing-rust">Installing Rust:</h2>
 <p>You must have <a href="https://www.rust-lang.org/tools/install">Rust</a> installed to
 compile this package. The rust website provides an excellent
@@ -649,12 +649,17 @@ installation script that has never caused me any issues.</p>
 <p>On Linux, you can install Rust with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">&#39;=https&#39;</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div>
 <p>On Windows, I use the rust installation wizard, found <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">here</a>.</p>
-<h2 id="installing-sparsepolicytree-from-github">Installing
-<code>sparsepolicytree</code> from Github:</h2>
+<h2 id="installing-package-from-github">Installing Package from
+Github:</h2>
 <p>Once you install rust, you should be able to install the package
 with:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;Yale-Medicaid/sparsepolicytree&quot;</span>)</span></code></pre></div>
-<h2 id="benchmarks">Benchmarks:</h2>
+<h1 id="benchmarks">Benchmarks:</h1>
+<p>Below are the results from a series of benchmarks to gauge the speed
+of the package. These were run on an old 4-core, 8-thread server that I
+have access to, and I think should be pretty representative of the speed
+a user can expect to see if they run the algorithm on all cores of a
+modern data-science laptop.</p>
 <table>
 <thead>
 <tr class="header">
@@ -759,6 +764,23 @@ with:</p>
 </tr>
 </tbody>
 </table>
+<p>sparse_policy_tree is dominant when the number of values a variable
+can take is small (say, under 200), but performs poorly when the number
+of unique values is large. For dense variables, you are generally better
+off using the policytree package, which is more developed,and will
+return faster while running on a only single core.</p>
+<h2 id="limiting-the-number-of-threads">Limiting the Number of
+Threads:</h2>
+<p>To constrain the number of cores the program uses, you can set the
+<code>RAYON_NUM_THREADS</code> variable before running the search. At
+present, this variable is read at the construction of the multithreading
+thread pool, and so must be set once each R session. In a future
+version, I’ll work to include a fix so that the number of threads can be
+included in an argument to the <code>sparse_policy_tree</code>
+function.</p>
+<p>Here’s an example of how to set the function to run on an single core
+in R:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">RAYON_NUM_THREADS=</span><span class="dv">1</span>)</span></code></pre></div>
 
 </body>
 </html>

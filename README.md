@@ -37,16 +37,16 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: b  split_value: 0.19 
-#>   (2) split_variable: c  split_value: -0.74 
+#> (1) split_variable: b  split_value: -0.73 
+#>   (2) split_variable: a  split_value: -3.36 
 #>     (4) * action: 3 
-#>     (5) * action: 2 
-#>   (3) split_variable: d  split_value: 0.91 
-#>     (6) * action: 1 
+#>     (5) * action: 3 
+#>   (3) split_variable: a  split_value: 0.57 
+#>     (6) * action: 3 
 #>     (7) * action: 2
 ```
 
-# Installation
+# Installation:
 
 ## Installing Rust:
 
@@ -63,7 +63,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 On Windows, I use the rust installation wizard, found
 [here](https://forge.rust-lang.org/infra/other-installation-methods.html).
 
-## Installing `sparsepolicytree` from Github:
+## Installing Package from Github:
 
 Once you install rust, you should be able to install the package with:
 
@@ -71,7 +71,13 @@ Once you install rust, you should be able to install the package with:
 devtools::install_github("Yale-Medicaid/sparsepolicytree")
 ```
 
-## Benchmarks:
+# Benchmarks:
+
+Below are the results from a series of benchmarks to gauge the speed of
+the package. These were run on an old 4-core, 8-thread server that I
+have access to, and I think should be pretty representative of the speed
+a user can expect to see if they run the algorithm on all cores of a
+modern data-science laptop.
 
 | Number of Observations | Number of Distinct Predictor Values | Number of Predictors | Number of Treatments | Time   |
 |------------------------|-------------------------------------|----------------------|----------------------|--------|
@@ -88,3 +94,25 @@ devtools::install_github("Yale-Medicaid/sparsepolicytree")
 | 10^2                   | 10^2                                | 30                   | 20                   | 0.41s  |
 | 10^3                   | 10^3                                | 30                   | 20                   | 40s    |
 | 10^4                   | 10^4                                | 30                   | 20                   | 70 min |
+
+sparse_policy_tree is dominant when the number of values a variable can
+take is small (say, under 200), but performs poorly when the number of
+unique values is large. For dense variables, you are generally better
+off using the policytree package, which is more developed,and will
+return faster while running on a only single core.
+
+## Limiting the Number of Threads:
+
+To constrain the number of cores the program uses, you can set the
+`RAYON_NUM_THREADS` variable before running the search. At present, this
+variable is read at the construction of the multithreading thread pool,
+and so must be set once each R session. In a future version, I’ll work
+to include a fix so that the number of threads can be included in an
+argument to the `sparse_policy_tree` function.
+
+Here’s an example of how to set the function to run on an single core in
+R:
+
+``` r
+Sys.setenv(RAYON_NUM_THREADS=1)
+```
