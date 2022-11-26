@@ -1,6 +1,12 @@
+#' @param X The covariates used for splitting in the tree (dimension NxP)
+#' @param Gamma Rewards for each action / treatment (dimension NXD)
+#' @param depth The number of variables.
+#' @param split.step consider every n'th split (currently ignored)
+#' @param min.node.size the smallest node size allowes (currently ignored)
+#' @param verbose print debug info (currently ignored)
 #' Return string `"Hello world!"` to R.
 #' @export
-sparse_policy_tree <- function(X, Gamma, depth) {
+sparse_policy_tree <- function(X, Gamma, depth=2, split.step=NULL, min.node.size=NULL, verbose=NULL) {
   n_obs <- nrow(X)
   valid_classes <- c("matrix")
 
@@ -36,6 +42,18 @@ sparse_policy_tree <- function(X, Gamma, depth) {
   }
   if (!is.double(Gamma)) {
       class(Gamma) <- "double"
+  }
+
+  if (!is.null(min.node.size)) {
+      warning("Argument 'min.node.size' is current ignored by sparse_policy_tree")
+  }
+
+  if (!is.null(split.step)) {
+      warning("Argument 'split.step' is current ignored by sparse_policy_tree")
+  }
+
+  if (!is.null(verbose)) {
+      warning("Argument 'Verbose' is current ignored by sparse_policy_tree")
   }
 
   node_list <- rust_exhaustive_tree(X, Gamma, depth)
