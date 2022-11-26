@@ -634,13 +634,13 @@ just as you would the <code>policy_tree()</code> function from the
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tree depth:  2 </span></span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Actions:  1 2 3 </span></span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variable splits: </span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: d  split_value: -2.92 </span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: a  split_value: -3.51 </span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (4) * action: 1 </span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (5) * action: 3 </span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: a  split_value: -3.51 </span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 3 </span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (7) * action: 3</span></span></code></pre></div>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (1) split_variable: b  split_value: 0.19 </span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (2) split_variable: c  split_value: -0.74 </span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (4) * action: 3 </span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (5) * action: 2 </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   (3) split_variable: d  split_value: 0.91 </span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (6) * action: 1 </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     (7) * action: 2</span></span></code></pre></div>
 <h1 id="installation">Installation</h1>
 <h2 id="installing-rust">Installing Rust:</h2>
 <p>You must have <a href="https://www.rust-lang.org/tools/install">Rust</a> installed to
@@ -649,6 +649,8 @@ installation script that has never caused me any issues.</p>
 <p>On Linux, you can install Rust with:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--proto</span> <span class="st">&#39;=https&#39;</span> <span class="at">--tlsv1.2</span> <span class="at">-sSf</span> https://sh.rustup.rs <span class="kw">|</span> <span class="fu">sh</span></span></code></pre></div>
 <p>On Windows, I use the rust installation wizard, found <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">here</a>.</p>
+<h2 id="installing-sparsepolicytree-from-github">Installing
+<code>sparsepolicytree</code> from Github:</h2>
 <p>Once you install rust, you should be able to install the package
 with:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;Yale-Medicaid/sparsepolicytree&quot;</span>)</span></code></pre></div>
@@ -750,7 +752,7 @@ with:</p>
 </tr>
 <tr class="odd">
 <td>10^4</td>
-<td>10^3</td>
+<td>10^4</td>
 <td>30</td>
 <td>20</td>
 <td>70 min</td>

@@ -37,13 +37,13 @@ tree
 #> Tree depth:  2 
 #> Actions:  1 2 3 
 #> Variable splits: 
-#> (1) split_variable: d  split_value: -2.92 
-#>   (2) split_variable: a  split_value: -3.51 
-#>     (4) * action: 1 
-#>     (5) * action: 3 
-#>   (3) split_variable: a  split_value: -3.51 
-#>     (6) * action: 3 
-#>     (7) * action: 3
+#> (1) split_variable: b  split_value: 0.19 
+#>   (2) split_variable: c  split_value: -0.74 
+#>     (4) * action: 3 
+#>     (5) * action: 2 
+#>   (3) split_variable: d  split_value: 0.91 
+#>     (6) * action: 1 
+#>     (7) * action: 2
 ```
 
 # Installation
@@ -63,7 +63,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 On Windows, I use the rust installation wizard, found
 [here](https://forge.rust-lang.org/infra/other-installation-methods.html).
 
-## Installing `sparsepolicytree` from GitHub:
+## Installing `sparsepolicytree` from Github:
 
 Once you install rust, you should be able to install the package with:
 
