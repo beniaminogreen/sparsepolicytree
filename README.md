@@ -63,6 +63,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 On Windows, I use the rust installation wizard, found
 [here](https://forge.rust-lang.org/infra/other-installation-methods.html).
 
+## Installing `sparsepolicytree` from GitHub:
+
 Once you install rust, you should be able to install the package with:
 
 ``` r
