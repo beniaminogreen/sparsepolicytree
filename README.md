@@ -85,4 +85,4 @@ devtools::install_github("Yale-Medicaid/sparsepolicytree")
 | 10^6                   | 30                                  | 30                   | 20                   | 21 min |
 | 10^2                   | 10^2                                | 30                   | 20                   | 0.41s  |
 | 10^3                   | 10^3                                | 30                   | 20                   | 40s    |
-| 10^4                   | 10^3                                | 30                   | 20                   | 70 min |
+| 10^4                   | 10^4                                | 30                   | 20                   | 70 min |
