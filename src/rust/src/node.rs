@@ -10,7 +10,7 @@ pub enum NodeType {
     Branch,
 }
 
-// Note to self: This should have been an enum
+// Note to self: This should have been an enum. Too late to change now
 #[derive(Debug, Clone)]
 pub struct Node {
     pub node_type: NodeType,
